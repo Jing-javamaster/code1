@@ -250,6 +250,82 @@ equals在String数据类型下判断的是字符串是否相等！！
 
 
 
+10.7
+toString：包名+类名+@内存地址
+
+创建对象 直接打印System.o.pln(c)对象默认的是执行这个对象的toString[System.o.pln(c.toString)]，也就是这个对象用字符串表示应该是怎么样的
+
+
+10.8
+1️⃣instanceof：判断xx对象是否是xx类型的
+意思是 如果xx对象是xx类型的一个实例
+判断的时候就通过if...else语句来
+if（ani instanceof Cat）{
+  System.out.println("ani是小猫")；
+}else{
+  System.out.println("ani不是小猫")；
+}
+2️⃣参数传递的问题
+java使用的是值传递；！！！理解这句话很重要
+
+例1:
+public static void change(int b) {
+        b = 20;
+        System.out.println(b);///b = 20⚠️
+    }
+    public static void main(String[] args){
+        int a = 10;
+        change(a);
+        System.out.println(a);///a = 10
+    }
+	
+例2:
+public static void change(Cat c){
+        c = new Cat("火猫");
+        System.out.println(c.name);///火猫
+    }
+public static void main(String[] args){
+        Cat c = new Cat("蓝猫");
+        change(c);
+        System.out.println(c.name);///蓝猫⚠️
+    }
+
+例3:
+public static void change(Cat c){
+        c.name = "土猫";
+    }
+public static void main(String[] args){
+        Cat c = new Cat("蓝猫");
+        change(c);
+        System.out.println(c.name);///土猫⚠️❓为什么呢？
+    }
+本质上是看是new了一个新的内存地址出来还是在原有的地址上进行改动，前面都是new了新的地址，最后打印的都是原有地址内容；
+例3是在原有的地址上进行改动，所以打印出来的是土猫。
+
+
+理解完所有⚠️就完全没问题
+
+
+
+3️⃣内存总体结构（栈、堆、方法区...）
+在分析内存的时候主要是栈和堆，记住这两个的作用就好
+
+区域                                          作用                                  举例
+栈（Stack）                                   存放局部变量、方法调用信息                 int x = 5;、方法参数等
+堆（Heap）                                    存放对象（Object），由 new 创建           new Cat("Mimi")
+方法区 / 元空间（Method Area / Metaspace）      存放类信息、常量池、静态变量、方法字节码       类的定义、static 变量
+程序计数器（PC寄存器）             				 记录当前线程执行到哪一行指令				   JVM内部使用
+本地方法栈（Native Stack）						 用于Java调用C/C++等本地代码时			   很少手动接触
+
+
+
+
+
+
+
+
+
+
 
 
 
