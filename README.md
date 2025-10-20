@@ -271,7 +271,7 @@ java使用的是值传递；！！！理解这句话很重要
 例1:
 public static void change(int b) {
         b = 20;
-        System.out.println(b);///b = 20⚠️
+        System.out.println(b);///b = 20
     }
     public static void main(String[] args){
         int a = 10;
@@ -297,7 +297,7 @@ public static void change(Cat c){
 public static void main(String[] args){
         Cat c = new Cat("蓝猫");
         change(c);
-        System.out.println(c.name);///土猫⚠️❓为什么呢？
+        System.out.println(c.name);///土猫⚠️❓为什么呢？///因为引用change方法：其中有直接改变当前c内存地址当中的name属性的方法，所以，，，
     }
 本质上是看是new了一个新的内存地址出来还是在原有的地址上进行改动，前面都是new了新的地址，最后打印的都是原有地址内容；
 例3是在原有的地址上进行改动，所以打印出来的是土猫。
