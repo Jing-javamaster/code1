@@ -1,0 +1,50 @@
+Recap 1 10月20日
+
+
+/ 除法运算 计算商      7 / 3 = 2（整数除法）或 2.333...（浮点除法）
+% 取余运算 计算余数    7 % 3 = 1
+
+code订正
+1.korrekte Deklaration & Initialisierung
+boolean l1keTearsInTheRain;✅(只作为声明的话)
+
+
+2.korrekte Initialisierung
+boolean d;❌因为布尔值是局部变量（在方法、if 块、for 块、while 块等里面定义的变量）。所有局部变量在使用前都必须显式赋值
+char e = "e";❌ 对于char是'' ->char e = 'e';
+
+float b = 5;✅（int->float是允许的，会自动类型提升）
+float c = 5.0f;✅
+Integer g = new Integer(5);✅
+
+
+3.
+Integer a = new Integer(4);
+Integer b = a;
+a = new Integer(5);
+// Welchen Wert hat b?
+选项：
+Objekt von Typ Integer mit dem Wert 5
+Es gibt einen Fehler
+null
+5
+Objekt von Typ Integer mit dem Wert 4✅
+4
+
+4.
+int a = (5 + 2) / 2;        a=3
+float b = (3 + 4) / 3;      b=7/3
+int c = (int) ((a + b) % 42);  ///强制类型转换（type cast）只保留int部分
+
+5.print和println的区别：有没有换行
+
+System.out.print("Hello");
+System.out.print("World"); ————>HelloWorld
+
+System.out.println("Hello");
+System.out.println("World");————>Hello
+                                 World
+
+
+
+
