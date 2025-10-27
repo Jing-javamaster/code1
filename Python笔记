@@ -1,0 +1,151 @@
+1️⃣.8️⃣这里的前缀 f 表示——
+
+这个字符串是一个 格式化字符串，
+可以在花括号 {} 里直接放入 变量或表达式，
+Python 会自动计算它们的值并插入。（f数据）
+
+2️⃣.1️⃣if-else 
+if条件:
+    code
+else:（注意空格，否则报错）
+    code
+
+if-elif-else
+
+
+
+2️⃣.2️⃣三元运算符
+status = "Even" if value % 2 == 0 else "Odd"
+
+2️⃣.3️⃣macth-case
+类似if-else的另一个表达 
+macth expression
+    case
+        code
+    case
+        code
+    case
+        code
+
+
+
+调用方法后面不需要花括号而是双引号：结尾也不需要分号；
+在方法中定义参数的时候也是用变量名：数据类型的形式
+
+ 
+
+  
+多行字符串：“““多行字符串”””
+
+值传递‼️：int,float, String (3.5)
+引用传递‼️:list dict
+
+3️⃣.6️⃣:是根据方法调用的顺序而不是代码顺序？
+global关键字：在函数内部“修改” 一个在函数外定义的变量时，才需要用 global。
+3️⃣.1️⃣0️⃣ lambda equivalent匿名函数，比def更简短
+# lambda 写法
+f = lambda x, y: x + y
+
+# def 等价写法
+def f(x, y):
+    return x + y
+
+3️⃣.1️⃣1️⃣ 函数作为参数
+
+4.1 List
+空数列
+empty = list()
+also_empty = []
+numbers = [5, 7, 9]
+
+
+4️⃣.2️⃣ 获取list元素
+print(f"First item: {groceries[0]}")
+花括号 {} 是用来插入变量或表达式的结果
+还有负数index从末尾开始-1
+4.3 修改list元素->直接赋值 
+4️⃣.4️⃣list方法和函数
+长度：len(numbers)
+添加元素：listname.append(element)添加到list最后
+删掉元素：numbers.remove(element)
+（通过index）del listname[index]
+插入元素：numbers.insert(1, 42) #在index1上插入元素42
+排序：
+numbers.sort()升序
+numbers.reverse()倒序
+数某个元素的个数：numbers.count(element)
+4.5
+if 99 in numbers:
+if 100 not in numbers:
+if "hello" in "hello, how are you?":
+4️⃣.6️⃣list节取
+numbers[5:]（从index5到结尾）
+numbers[:3]（到index3，不含3）
+numbers[::2]（每两个）
+numbers[2:6]（2-6，不含6） ————>冒号后面的index不包含
+numbers[5:1:-1]从右往左取，每次往回一步（不包含冒号后面的1）
+4️⃣.9️⃣zip函数：
+把多个列表（或序列）按“并行配对”的方式组合起来，方便你同时遍历它们。
+departments = ["Computer Science", "Chemistry", "Mathematics"]
+numbers = [20, 7, 4]
+for dept, num in zip(departments, numbers):
+    print(f"Department {num}: {dept}")
+
+
+格式：
+list1 = []
+list2 = []
+for l1,l2 in zip(list1,list2):
+    print(f"Nom{l1}:{l2}")
+
+4️⃣.🔟多维list‼️
+4️⃣.1️⃣1️⃣copy list
+
+5️⃣.1️⃣Tuple
+和list的区别？
+list 可变(mutable)适合存放动态数据。使用[]
+tuple 不可变序列(immutable)，适合存放固定结构的数据。使用()
+5️⃣.2️⃣Tuple Unpacking
+一次性给多个变量赋值
+1.unpack tuple
+coordinates = (10, 20)
+x, y = coordinates
+print(f"x = {x}, y = {y}")
+
+2.direct assignment
+a, b, c = 1, 2, 3
+print(f"a = {a}, b = {b}, c = {c}")
+
+3.swap element
+x, y = y, x
+print(f"After swap: x = {x}, y = {y}")
+
+
+6️⃣.1️⃣dictionary 
+是「键值对（key–value）」的集合
+相比于list的好处：能直接通过关键字查找，不用记住位置
+创建dict
+通过key获取：dictname["key"]
+单引号 ' 和 双引号 " 定义的字符串是 完全等价的。
+修改值：直接给对应的key赋值
+加上新元素对：dictname[“key”] = “value”
+
+
+6️⃣.2️⃣dict方法
+get all keys/values/pairs：
+dictname.keys()/.values()/.items()
+6️⃣.3️⃣dict迭代
+keys/values/pairs
+for key in shopping.keys():
+    print(f"  {key}")
+for value in shopping.values():
+    print(f"  {values}")
+for key,value in shopping.items():
+    print(f"  {key}:{value}")
+6️⃣.4️⃣get()方法
+cheese = inventory.get("Cheese")
+print(f"Cheese: {cheese}")
+Cheese:None
+
+
+7.1
