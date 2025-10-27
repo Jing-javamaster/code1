@@ -5,11 +5,10 @@ Recap 1 10月20日
 % 取余运算 计算余数    7 % 3 = 1
 
 code订正
-1.korrekte Deklaration & Initialisierung
+1️⃣korrekte Deklaration & Initialisierung
 boolean l1keTearsInTheRain;✅(只作为声明的话)
 
-
-2.korrekte Initialisierung
+2️⃣korrekte Initialisierung
 boolean d;❌因为布尔值是局部变量（在方法、if 块、for 块、while 块等里面定义的变量）。所有局部变量在使用前都必须显式赋值
 char e = "e";❌ 对于char是'' ->char e = 'e';
 
@@ -17,8 +16,7 @@ float b = 5;✅（int->float是允许的，会自动类型提升）
 float c = 5.0f;✅
 Integer g = new Integer(5);✅
 
-
-3.
+3️⃣
 Integer a = new Integer(4);
 Integer b = a;
 a = new Integer(5);
@@ -31,12 +29,13 @@ null
 Objekt von Typ Integer mit dem Wert 4✅
 4
 
-4.
+4️⃣
 int a = (5 + 2) / 2;        a=3
 float b = (3 + 4) / 3;      b=7/3
 int c = (int) ((a + b) % 42);  ///强制类型转换（type cast）只保留int部分
 
-5.print和println的区别：有没有换行
+
+5️⃣print和println的区别：有没有换行
 
 System.out.print("Hello");
 System.out.print("World"); ————>HelloWorld
@@ -44,6 +43,46 @@ System.out.print("World"); ————>HelloWorld
 System.out.println("Hello");
 System.out.println("World");————>Hello
                                  World
+
+6️⃣
+Wie kann man den Wert der Variablen a in die Konsole ausgeben, wenn sie ein Objekt ist?
+System.out.print(a.value);
+System.out.println(a);
+System.out.print(a.val);
+Keine der oben genannten Optionen✅
+System.out.print(a);
+解答：
+在 Java 中，对象变量保存的不是“值”，而是“引用”（即内存地址）。
+此时，Java 会调用 a.toString() 方法。而默认的 toString() 输出是：类名@哈希码
+所以为了输出真正的值：1.类自己覆盖（override）了 toString() 方法； 2.通过 Getter 方法访问字段❓
+1.类自己覆盖（override）了 toString() 方法 意思就是在当前这个类当中，我们重写toString这个方法到我们需要的值，或者像这里例子里的名字，然后再直接打印需要的变量，就是我们需要的值
+
+
+7️⃣Welche Variablen sind an der markierten Stelle im folgenden Code sichtbar?
+public void testMethod(int a) {
+    int b = 0;
+    if (b > 0) {
+        int c = 2;
+    }
+    // Welche Variablen sind hier sichtbar? Loesung:a,b
+    int d = 1;
+}
+	•  a（方法参数）：整个方法体内可见 → 在标记处可见。
+	•  b（在方法体内声明）：从声明处开始到方法结束 → 在标记处可见。
+
+
+8️⃣第15题‼️
+实际上考查的是 在println的作用域内有哪些变量
+这里引申了一个{}的知识点，有时候无中生有的花括号其实是圈地自圆，就是为了隔开这种作用域在整个方法体内的方法，也就是说题目里的l它只活在花括号内
+
+9️⃣第17题‼️
+a,b,c它们定义在类体内、方法外。所以它们的作用域是：是属于整个类的所有方法中都可访问（同一个对象实例内）。
+
+重点关注：嵌套块的作用域
+
+
+
+
 
 
 
