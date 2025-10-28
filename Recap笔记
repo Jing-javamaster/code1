@@ -1,4 +1,4 @@
-Recap 1 10月20日
+Recap 1 10🈷️20日
 
 
 / 除法运算 计算商      7 / 3 = 2（整数除法）或 2.333...（浮点除法）
@@ -79,6 +79,85 @@ public void testMethod(int a) {
 a,b,c它们定义在类体内、方法外。所以它们的作用域是：是属于整个类的所有方法中都可访问（同一个对象实例内）。
 
 重点关注：嵌套块的作用域
+
+
+
+Recap2 10🈷️27日
+
+1.do-while语句 do{schleifenrumpf} while(条件); 因此循坏至少执行一次，因为检查条件在后面
+2.循环语句的转化
+(1)for语句及其他语句的转化
+for(int i = 0; i < 5; i++){
+// deinen Code hier
+}
+
+int i = 0;
+while(i < 5){
+// deinen Code hier
+i++;
+}
+
+int i = 0;
+do {
+if(i > -1){
+// deinen Code hier
+}
+i++;
+}
+while(i < 5);
+
+(2)while语句及其他语句的转化
+while(bedingung){
+// deinen Code
+
+for (; bedingung;){
+// deinen Code
+}
+
+do{
+ if(bedingung){
+ // deinen Code
+ }
+}
+while(bedingung);
+
+
+3.break和continue的区别
+关键字		作用对象			执行效果
+break		整个循环			立即终止整个循环（跳出循环体）
+continue	当前循环的一次迭代	立即跳到下一次循环（跳过当前迭代中剩余的语句）
+
+
+4.for循环语句的结构
+for(Initialisierung;Bedingung;Inkrement)
+
+
+theorie订正
+1️⃣使用for循环语句的条件：知道次数
+使用while循环语句的条件：不知道次数
+
+2️⃣for循环语句Kopf构造(Initialisierung;Bedingung;Aktualisierung‼️)
+
+3️⃣continue不能在Schleifenrumpf以外使用，是语义错误
+
+4️⃣break的作用：Beendet die gesamte Schleife vollständig
+⚠️不是Überspringt den Rest des Schleifenrumpfs(只是跳过当前Iteration的剩余部分)
+continue的作用：Überspringt den Rest des Schleifenrumpfs und geht zur nächsten Iteration
+
+5️⃣continue和break只要在循环rumpf里面就可以，不限定循环语句类型
+
+6️⃣for循环语句的头部三部分哪一部分是可以舍弃的？A：全部
+for( ; ; ){
+    // Endlosschleife !!!
+}
+7️⃣在一个循环的头部条件一直是true，那就会一直执行，直到手动break或者报错
+
+8️⃣计算嵌套循环的次数：根据内层循环在每次外层迭代的时候，循环的次数是否都相同来判断，如果相同那就可以内外两层的循环次数相乘等于总循环次数，如果不同的话，那计算总循环次数就要使用加法
+
+9️⃣❌Die innere Schleife wird parallel zur äußeren ausgeführt, was die Parallelisierung des Codes erleichtert
+循环的本质是顺序执行，并不是并行执行
+
+
 
 
 
