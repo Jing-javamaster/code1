@@ -195,6 +195,99 @@ while(i < 2);
 
 
 
+Recap3 11🈷️3日
+
+1.Arrays固定的speicherplatz，大小不能改变
+int a[] = {1,2,3,4,5}
+对于简单数据结构：只能是和自己array同类型的数据
+复杂类型array：同类型&子类的类型（比如number的子类是integer和float）
+
+2.为什么使用arrays？
+在同一个名字下存储多个数据；通过index获取；适用于循环和批量处理
+
+3.Array的声明
+Typ[] nameDerVariable = new Typ[ LängeAlsGanzzahl ];
+
+4.在array只声明，不初始化时：
+Integer[] a;‼️此时这个array不存在，如果你要给其中一个位置初始化a[0] = 4; -> 会报错
+此时也不能调用和这个array属性相关的a.length 会抛出NullPointerException
+
+5.只用标准值初始化时（只创建了array且写了长度）：
+int[] a = new int [5]; 此时每个位置都是0（boolean-false; float-0.0f）
+无法调用a[i].method()/a.attribute  ->  会抛出NullPointerException
+
+6.填充array的元素：
+int[] zahlen = new int[5];
+for (int i = 0; i < zahlen.length; i=+) {
+	System.out.println(zahlen[i]);
+}
+Alternativ：
+for (int zahl : zahlen) {
+	System.out.println(zahl);
+}
+‼️for (Type elementName : arrayName){
+	System.out.println(elementName);//自己取的elementName
+}
+
+
+7.多维arrays（二位数组中的结构形式）
+rechteckig矩形状：int[][] a = new int[2][9] (矩形2x9)
+jagged锯齿状：
+int[][] b= new int[2][];///只确认外层元素
+b[0] = new int[4];///第一行4个元素：内层元素确认
+b[1] = new int[2];///第二行2个元素
+
+
+8.arrays常见的报错：
+ArrayIndexOutOfBoundsException：index在有效边界外（一般发生在：循环边界错误）
+NullPointerException：调用了未初始化的array或者元素（只声明了，但是未初始化，即使声明了长度）
+错将length写成length();
+不相容的元素类型:声明的数组类型与元素类型不符；
+arrays的打印方法：
+1️⃣
+int[][] matrix = {{1, 2}, {3, 4}};
+for (int i = 0; i < matrix.length; i++) {
+	for (int j = 0; j < matrix[i][j].length; j++) {
+    	System.out.print(matrix[i] + " ");
+	}
+    System.out.println();/////这是换行
+}
+输出：
+1 2 
+3 4 
+2️⃣Arrays.toString(a);这是系统自动打印！！！！只输出一行且无法控制输出格式
+比如一维数组：‼️int[] a = {1, 2, 3};System.out.println(Arrays.toString(a));
+多位数组：int[][] b = { {1, 2}, {3, 4} };
+System.out.println(Arrays.deepToString(b));‼️deepTo T也要大写
+
+
+
+
+9.一维和二维的数组示例
+// Eindimensionales Array (Kurzschreibweise)
+int[] numbers = {1, 2, 3};
+int[] zahlen = new int[3];
+zahlen[0] = 1;
+zahlen[1] = 2;
+zahlen[2] = 3;
+// Zweidimensionales Array (Kurzschreibweise)
+int[][] matrix = {
+{1, 2, 3},
+{4, 5, 6},
+{7, 8, 9}
+};
+
+
+10.小作业✍️
+1️⃣Array-Inhalt ausgeben (for-each) 
+2️⃣Summe aller Elemente berechnen
+3️⃣二维数组迭代
+
+
+
+
+
+
 
 
 
