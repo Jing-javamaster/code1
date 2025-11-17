@@ -855,3 +855,58 @@ new Moveable(); // 接口不能作为动态类型（不能被实例化）
 只要满足这些 → 就可以 new。
 
 
+
+9.为什么接口不能有构造器而抽象类可以？
+构造器存在的意义只有一个：初始化对象的状态（字段）。
+接口没有对象 → 所以不需要构造器
+🤔但为什么抽象类可以有构造器，它也不能有对象？
+因为抽象类本质是“一个不完整的类”，但仍然是“类”‼️。接口不是类，它是能力描述。‼️
+
+
+
+10.匿名类：没有自己的名字/只能实现一次/不能定义构造器（因为没有类名）
+
+abstract class Animal {
+abstract void doSound();
+}
+
+Animal cat = new Animal() {
+    void doSound(){ System.out.println("Myao"); }
+};
+你在 new 的不是 Animal。
+因为 Animal 是抽象类，不能 new。
+
+👉 你实际上是在 new 一个“临时生成的子类”。‼️
+这个子类继承 Animal，并实现了 doSound()。
+
+👉 但这个子类没有类名。
+
+
+
+
+
+
+Theorie订正：
+1.抽象类和接口的主要目的：
+Eine abstrakte Klasse bildet die Grundlage für eine Klassenhierarchie.抽象类用来建立一个“类族谱”（继承体系）。
+Ein Interface definiert welche Methoden oder Funktionalitäten eine Klasse bereitstellen muss. 接口定义“这个类必须能做什么”。
+
+2.Alle Methoden in einem Interface sind automatisch public✅在 interface 里，方法的访问修饰符永远都是 public，即使你不写，Java 也会自动当作 public。
+Ein Interface kann mehrere andere Interfaces erweitern‼️接口居然可以继承多个接口，单继承多实现只是对类，单继承一个类，多实现多个接口
+Ein Interface kann (seit Java8) Methoden mit Implementation enthalten
+
+❓为什么接口可以继承多个接口？
+因为接口没有字段、构造器、复杂实现 → 不会有冲突 → 能做能力组合。‼️
+
+
+3.抽象类和接口的共同之处
+Beide können mehrere Interfaces implementieren/erweitern‼️这里的erweitern‼️是继承的意思😓
+Beide können nicht direkt instanziiert werden
+Beide können konkrete (implementierte) Methoden enthalten
+
+
+
+
+
+
+
