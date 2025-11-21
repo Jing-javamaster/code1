@@ -17,3 +17,22 @@ H2.2
 fop03-
 1.一旦 Java 程序执行到 return 语句，就会立即结束整个方法的执行，
 后面的所有代码（包括循环、最后的 return true;）都不会再运行。
+
+
+
+fop04-
+1.在写子类extend到父类的时候，父类当中有abstract方法，子类要么实现这个方法，要么也成为abstract
+2.子类在调用父类构造器的时候，父类没有默认，子类一开始要super()
+3.子类super可以不用照搬父类的参数
+  父类需要 4 个参数没错（你必须给它）
+	•	但作为子类，你可以决定其中某些参数的默认值
+	•	所以子类构造器没必要暴露所有父类参数
+比如：
+父类是：protected Participant(Species species, int x, int y, Direction orientation) {}
+子类：public Scissors(int x,int y){
+        super(Species.SCISSORS,x,y, Direction.UP);
+    }
+也就是所谓的子类可以决定某些参数的默认值
+
+4.两个你死我活，返回活的那个，三元运算符 我死？你：我；
+        
