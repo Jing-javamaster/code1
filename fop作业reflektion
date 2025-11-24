@@ -53,3 +53,22 @@ fop05-
 名字不完全相同 → 就是不同包 → 必须 import。
 也就是：
 只要 package 名字不完全一样 → 就必须 import
+
+
+
+3.“在构造器里初始化”是什么意思？
+你声明了一个字段之后，必须在类的构造方法（constructor）里给它赋值。
+
+private final double capacity;
+public Powerbank(double capacity) {
+    this.capacity = capacity;
+}
+
+
+
+4.实现一个接口，也就是实现这个接口+它上面所有extends的接口
+判断一个方法是否需要自己写：‼️‼️
+看你的类 implements 的每一个接口里：
+这个方法是否已经有 default 实现。
+有就不用
+
