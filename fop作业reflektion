@@ -72,3 +72,79 @@ public Powerbank(double capacity) {
 这个方法是否已经有 default 实现。
 有就不用
 
+
+
+5.if替换成switch的情况
+在什么情况下switch比if更适用❓ 「根据对象的类型」」来决定行为的时候
+🤔而 if 更适合：
+	•	复杂条件
+	•	多重比较
+	•	不可枚举的逻辑
+	•	需要 boolean 表达式、范围判断
+
+
+
+Folien03b中讲了instanceof
+03c中讲了switch 
+216讲了需要break的一种写法
+228讲了一种‼️不需要break的一种写法
+
+
+
+6.instanceof
+作用：判断某个对象是否属于某个类（或接口）的类型。
+
+
+
+7.某点(x,y)半径r以内的正方形
+超过地图的点不要
+int width;
+int height;
+for(int i = -r; i <= r; i++){
+	for(int j = -r; j <= r; j++){
+		int ii = i + x;
+		int jj = j + x;
+		if(ii < 0 || ii > width || jj < 0 || jj > height){
+			continue;///当前点不要啦
+		}
+		add(ii,jj);///如果在地图内，就要这个点
+	}
+}
+
+
+
+8.需要返回一个不知道长度的数组Point[]
+使用了ArrayList<Point> list = new ArrayList<>();
+为什么？🤔
+‼️数组（Point[]）必须在创建时就知道“确切长度”，这里我们因为有continue，也就不能确定确切长度
+‼️ArrayList 是“可变长的容器”（动态数组）
+你加多少个 Java 都会自动分配内存，并把数据存进去。
+你完全不用提前知道“要存多少个点”。
+这就是它存在的原因。
+‼️ArrayList 和 List 的区别是什么？
+	•	List 是接口（规则）
+	•	ArrayList 是实现类（具体容器）
+‼️什么时候应该用 ArrayList 来替代数组？
+当你不知道最终项的数量，或者项是动态变化时，用 ArrayList。
+当你已经知道确切长度，并且不会改变时，用数组。
+
+
+
+
+
+9.void方法当中可以写return
+写了 return; → 你可以中途提前退出，不继续后面的逻辑
+不写 return → 方法会执行完所有代码自动结束
+⚠️但是不能return某个值，也就是说在void语句当中使用return仅仅为了提早结束代码
+
+
+
+
+
+
+
+
+
+
+
+
