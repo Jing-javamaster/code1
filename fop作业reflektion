@@ -47,14 +47,10 @@ fop05-
 类C implements A（‼️也就是类C要实现A+B的所有方法）
 🤔如果此时有多个C，也就是有多个拥有共同实现的类C，此时引入一个AbstractB类，只用在这个类中实现，让所有类C extends这个类就好了
 
-
-
 2.在什么情况下需要import？
 名字不完全相同 → 就是不同包 → 必须 import。
 也就是：
 只要 package 名字不完全一样 → 就必须 import
-
-
 
 3.“在构造器里初始化”是什么意思？
 你声明了一个字段之后，必须在类的构造方法（constructor）里给它赋值。
@@ -64,15 +60,11 @@ public Powerbank(double capacity) {
     this.capacity = capacity;
 }
 
-
-
 4.实现一个接口，也就是实现这个接口+它上面所有extends的接口
 判断一个方法是否需要自己写：‼️‼️
 看你的类 implements 的每一个接口里：
 这个方法是否已经有 default 实现。
 有就不用
-
-
 
 5.if替换成switch的情况
 在什么情况下switch比if更适用❓ 「根据对象的类型」」来决定行为的时候
@@ -81,20 +73,13 @@ public Powerbank(double capacity) {
 	•	多重比较
 	•	不可枚举的逻辑
 	•	需要 boolean 表达式、范围判断
-
-
-
 Folien03b中讲了instanceof
 03c中讲了switch 
 216讲了需要break的一种写法
 228讲了一种‼️不需要break的一种写法
 
-
-
 6.instanceof
 作用：判断某个对象是否属于某个类（或接口）的类型。
-
-
 
 7.某点(x,y)半径r以内的正方形
 超过地图的点不要
@@ -111,8 +96,6 @@ for(int i = -r; i <= r; i++){
 	}
 }
 
-
-
 8.需要返回一个不知道长度的数组Point[]
 使用了ArrayList<Point> list = new ArrayList<>();
 为什么？🤔
@@ -128,14 +111,12 @@ for(int i = -r; i <= r; i++){
 当你不知道最终项的数量，或者项是动态变化时，用 ArrayList。
 当你已经知道确切长度，并且不会改变时，用数组。
 
-
-
-
-
 9.void方法当中可以写return
 写了 return; → 你可以中途提前退出，不继续后面的逻辑
 不写 return → 方法会执行完所有代码自动结束
 ⚠️但是不能return某个值，也就是说在void语句当中使用return仅仅为了提早结束代码
+
+10.还是有必要每一个代码都检查一遍
 
 
 
