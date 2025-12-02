@@ -120,6 +120,23 @@ for(int i = -r; i <= r; i++){
 
 
 
+fop06-
+1.由于对象常量必须在构造函数中初始化，你必须创建一个公共构造器，将 TransportType 对象作为形式参数并用它初始化 transportType。
+public MeansOfTransport(TransportType transportType) {
+    this.transportType = transportType;
+}❓不理解
+1️⃣构造器的作用只有一个：
+当别人 new 这个类时，用来初始化对象的字段。也就是说人家在new一个这个类的新对象的时候，那构造器就负责把传进来的 TransportType 保存到这个对象里。
+对象里面的 transportType   =   调用构造器时传进来的 transportType
+
+2.后面说对象常量必须在构造器当中initialisieren，那为什么实际还是写在构造器之外？
+‼️初始化和声明不同：初始化-赋值，声明-不赋值
+final 字段必须“在构造器里赋值”，但字段本身必须“在类里面声明
+且构造器本身是为了初始化对象的字段的，不是声明字段用‼️
+
+
+
+
 
 
 
