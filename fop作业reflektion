@@ -135,12 +135,36 @@ final 字段必须“在构造器里赋值”，但字段本身必须“在类�
 且构造器本身是为了初始化对象的字段的，不是声明字段用‼️
 
 
+3.‼️‼️构造器的用法
+构造器当中初始化字段（通过传进来的参数），因为这些字段是作为一个后续在我们创建对象的时候给人家初始化用的值。
+初始化的字段来源于 这个类（以及它的父类）中定义的字段。
+字段在本类声明 → 用 this.field = parameter;
+字段在父类声明 → 用 super(parameter);
+
+4.static final和final的区别‼️
+“Klasssenkonstante” = 类常量 = static final
+不是对象常量。
+
+类型							写法				作用范围				属于对象？
+对象常量（Objektkonstante）	final			每个对象自己的值		✔
+类常量（Klassenkonstante）	static final	整个类共享			❌
+
+
+5.protected的范围
+同一个包当中类+所有的子类（跨包也可以）
+
+也就是说 protected 同时满足两条：
+	1.	包可见性（同包都能访问）
+	2.	继承可见性（子类都能访问）
+任何一个成立，就能访问。
 
 
 
-
-
-
+6.implement（实现）只能发生在：
+	•	类 implements 接口
+	•	接口 extends 接口
+	•	类 extends 类
+	•	类 extends 抽象类
 
 
 
