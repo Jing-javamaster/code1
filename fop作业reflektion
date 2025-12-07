@@ -167,6 +167,19 @@ final 字段必须“在构造器里赋值”，但字段本身必须“在类�
 	•	类 extends 抽象类
 
 
+6.1 remainingWood的原理是理解难点，有很多地方需要兼顾：比如减去1后是否为0，如果为0还要将原数组的index0设置成这个。
+
+
+7.substring(int a, int b)是取从a开始到b-1
+
+8.replaceToken的原理：
+首先是indexOf占位符<>的位置，然后取出他们中间的token，
+通过tokenDictionary的lookup方法找到应该用什么字符替代，该替代字符为replacement，
+然后再把整个String当中，占位符两侧的部分取出（不含占位符），
+然后再把三个部分：占位符左侧字符+replacement+占位符右侧字符，合起来return 这就是这个replaceToken的运行原理
+
+
+
 
 
 
