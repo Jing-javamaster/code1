@@ -208,12 +208,47 @@ do-while
 
 
 
-
-3.rekursive和iteration的互相转换
-？？？？？？？？？？/❓
+3.Racket当中list-ref是Array当中的查询，比如list-ref Array 1相等于Array[1]
 
 
 
+
+
+4.rekursive和iteration的互相转换
+1️⃣递归（rekursiv）
+	•	函数 / 方法自己调自己。
+	•	必须有两个东西：
+	1.	Basisfall：最小情况，直接返回。
+	2.	Rekursionsschritt：把大问题变小，丢给自己。
+2️⃣迭代（iterativ）
+	•	用 for / while 循环，一步一步更新变量。
+	•	不再“自己调用自己”，而是用变量来保存“现在走到哪一步了”。
+
+‼️‼️关键认识：递归和迭代做的是 同一件事：“不断做同样的一步操作，直到满足结束条件”。
+区别只是：
+	•	递归：由调用栈帮你记住“做到哪一步了”。
+	•	迭代：由你自己声明的变量帮你记住“做到哪一步了”。
+你现在“转不过弯”的地方，通常就是：‼️没有清晰看到：递归里哪几个东西，对应迭代里的“循环变量”和“累加结果”。
+
+举例：
+（Rekursive）
+int factRec(int n) {
+    if (n == 0) {        // Basisfall
+        return 1;
+    }
+    return n * factRec(n - 1);   // Rekursionsschritt
+}
+
+（Iterative）
+int factIter(int n) {
+    int result = 1;           // 对应“到目前为止的结果”
+    int i = 1;                // 对应“走到第几步了”
+    while (i <= n) {
+        result = result * i;  // 做一步
+        i = i + 1;            // 变小/变大一点
+    }
+    return result;
+}
 
 
 
