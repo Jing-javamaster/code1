@@ -255,6 +255,31 @@ int factIter(int n) {
 
 
 
+fop08-
+1.所谓的树结构和我们上一份练习当中的Racket几乎一模一样
+把算术表达式用树结构表示出来（‼️节点里存操作，子节点是操作数/子表达式）
+
+2.functional Interface和Lambda
+1️⃣Functional interface = ‼️一个“只描述函数长什么样”的接口
+关键规则（这是 functional interface 的核心）：一个 interface 里，只允许有一个抽象方法
+也就是说：
+	•	一个接口
+	•	只定义一个函数签名
+	•	不写实现
+这就是“functional”。
+
+2️⃣Lambda 只是实现这个接口的一种写法。
+不用lambda：								用了lambda：
+IntToInt f = new IntToInt() {			IntToInt f = x -> x + 1;
+    @Override
+    public int apply(int x) {
+        return x + 1;
+    }
+};
+Lambda 的本质（非常重要）：lambda ‼️不是“新概念”，它只是：“帮你写掉那一大坨 anonymous class 的语法糖”
+
+
+
 
 
 
