@@ -1197,10 +1197,18 @@ Recap7 1🈷️19日
 Thema 7 - Fehlerbehandlung
 
 
-1️⃣RuntimeException(逻辑错误)可以通过更好的代码避免
+1️⃣Exception的两种类型：区别在于编译器是否强制你处理
+checked：继承自 Exception，但不是 RuntimeException	——>	 必须在编译期处理
+🌰：IOException，SQLException
+unchecked：继承自 RuntimeException   ——>	 编译器不强制处理
+🌰：NullPointerException，ArithmeticException， IndexOutOfBoundsException
+
+
+2️⃣
+RuntimeException(逻辑错误)可以通过更好的代码避免
 🌰：NullPointerException, IllegalArgumentException, IndexOutOfBoundsException.
 
-2️⃣Error(❌系统存在严重问题，不是正常错误处理的一部分)
+Error(❌系统存在严重问题，不是正常错误处理的一部分)
 🌰：OutOfMemoryError，StackOverflowError
 
 3️⃣try-catch-finally
@@ -1298,15 +1306,66 @@ catch (SQLException e) { ... } // ✔ 完全合法
 
 
 
+Theoriefragen订正：
+1.Warum schreiben wir die ganze Klasse oder den gesamten Code in try-catch-Blöcke nicht?
+a.Doch, es ist möglich und ist eine gute Praxis❌
+b.Verstecken von Fehlern - unerwartete Fehler werden ignoriert✅⚠️
+因为！
+try {
+    // 整个程序
+}
+catch (Exception e) {
+    // 什么都不做 / 只打印一句
+}
+结果是：
+	•	本来应该暴露的 bug
+	•	被你 catch 掉了
+	•	程序“假装还能跑”‼️
+👉 这就叫“错误被隐藏”
+c.Unklare Fehlerbehandlung - es wird schwierig zu erkennen, welcher Teil des Codes Fehler verursacht hat✅
+d.Verschlechterte Performance (Leistung) von Programm✅
+
+2.Worin besteht der Unterschied zwischen checked und unchecked Exceptions in Java?
+a.Checked Exceptions müssen entweder mit try/catch behandelt oder im Methodenkopf mit throws deklariert werden. 
+Unchecked Excpetions kann man vorhersagen, darum müssen sie auch nicht behandelt werden.✅
+b.Beide Arten von Exceptions müssen mithilfe der throws-Clause behandelt werden, 
+aber eine checked Excpetion wirft man selbst mit "throw", und die unchecked Exceptions wird Java bei Bedarf selbst werfen.❌两种异常都能手动werfen或者Java bei Bedarf selbst werfen
+⚠️Checked Exceptions 必须在编译期通过 try/catch 或 throws 处理；
+Unchecked Exceptions 不受编译器强制。
+Checked Exceptions 通常表示可恢复的外部错误，
+而 RuntimeExceptions 多为编程错误。
+c.Checked Excpetions geben wiederherstellbare Fehler/ Zustände des Programms wieder, 
+während RuntimeExceptions eher Programmierfehler sind, die manchmal schwer nachvolziehbar sind.✅
+
+3.Was passiert, wenn eine Exception in einem try-Block geworfen wird, aber kein passender catch-Block vorhanden ist?
+a.Falls vorhanden, wird der finally-Block ausgeführt.✅
+b.Die Exception wird weitergegeben (propagiert), und das Programm kann abstürzen, wenn sie nicht abgefangen wird.✅finally的执行和程序坠毁不矛盾。
+c.Die Exception wird ignoriert, und das Programm läuft normal weiter.❌
 
 
 
 
 
+Codefragen订正：
+1.在throws（声明）的时候可以直接写父类而不是详细地写到子类
 
+2.后缀自增x++的意思是：
+先使用“旧值”，再把变量加 1
 
+写法			执行顺序			表达式的值		变量最终值	
+++x			先加 1，再用		新值				新值				
+x++			先用，再加 1		旧值				新值
 
+3.
+try{
+    sample();
+}
+catch (FileNotFoundException e) { ... }
+catch (NoSuchMethodException e) { ... }
+catch (NullPointerException e) { ... }
 
+在multi-catch的时候，使用同个变量e是ok的；
+变量没有继承关系所以顺序没关系
 
 
 
