@@ -1190,3 +1190,123 @@ A：返回-1
 
 
 
+
+
+
+Recap7 1🈷️19日
+Thema 7 - Fehlerbehandlung
+
+
+1️⃣RuntimeException(逻辑错误)可以通过更好的代码避免
+🌰：NullPointerException, IllegalArgumentException, IndexOutOfBoundsException.
+
+2️⃣Error(❌系统存在严重问题，不是正常错误处理的一部分)
+🌰：OutOfMemoryError，StackOverflowError
+
+3️⃣try-catch-finally
+try：// 可能抛异常的最小代码块（但不一定抛），try 不是“一定会出错”，只是“允许出错”，最可能出错的代码块部分
+catch：// 只能捕获 try 块中抛出的、并且‼️类型匹配的异常。
+finally：// 一定执行（几乎）
+⚠️唯一几个例外：System.exit(...) / JVM 直接崩溃
+
+try -> 正常 -> finally
+	-> 报错 -> catch（不管ca没ca到）	-> finally
+
+try 抛异常
+→ 所有 catch 尝试匹配（失败）
+→ 执行 finally
+→ 异常向外抛（当前方法直接结束）
+
+4️⃣catch内部的Exception顺序至关重要‼️
+首先必须处理特定的例外类，然后是一般例外。或者子类排在前面，父类排在后（否则问题的具体描述会因泛化而丢失）。
+❓那为什么不直接写父类，子类反正也包含进去了？
+A：这里的意思是，如果有 多个catch并且存在继承关系的话，那么需要按照子类在前父类在后的顺序来写。
+
+try {
+// ...
+} catch (IOException e) {
+	// IO Fehler
+} catch (NullPointerException e) {
+	// Null-Fehler
+}
+
+那么哪些是特定哪些是一般例外呢？
+看继承关系，父类是一般例外，子类是特定例外
+•Throwable
+	•Exception
+	   •RuntimeException
+			•NullPointerException
+			•IllegalArgumentException
+
+5️⃣multi-catch
+try {
+	// ...
+} catch (IOException | SQLException e) {
+	e.printStackTrace();‼️这叫相同的处理逻辑
+}
+适用情况：相同的处理逻辑并且‼️没有继承关系的话
+
+6️⃣
+public class MyException extends Exception {
+	public MyException(String message) {
+		super(message);
+	}
+}
+这里super(message)的作用？
+由于子类对象中包含父类的状态，在构造子类对象时必须先调用父类构造器，以便由父类自身完成其部分的初始化；因此在自定义异常中通过 super(message) 将参数传递给父类构造器。
+
+7️⃣throw和throws
+throw：抛出异常
+throws：声明可以抛出异常
+
+public void checkAge(int age) throws‼️ IllegalArgumentException {
+	if (age < 18) {
+		throw‼️ new IllegalArgumentException("Zu jung!");
+	}
+}
+
+8️⃣常见误区
+1.finally funktioniert ähnlich wie else und wird nur ausgeführt, wenn keine Exception geworfen wurde.❌
+finally是不管怎么样都会执行的
+
+2.Alle Exceptions müssen behandelt werden.❌
+只有 checked exception（受检异常）才“必须处理或声明”
+unchecked exception（RuntimeException 及其子类）可以不处理
+
+‼️3.catch(Exception e) ist eine universelle Lösung.❌
+universell在可以全部接住，但是并不能全部解决，因为具体异常具体分析，不可能有万能解能解决所有类型的异常
+
+4.finally ist nicht notwendig, wenn einer der catch-Blöcke garantiert ausgeführt wird.❌
+catch 不是保证执行的
+finally 才是唯一的“清理保证”
+
+5.Error sei eine Unterklasse oder eine Oberklasse von Exception.❌
+Error和Exception是Throwable的子类，他俩平行
+
+6.In jedem catch-Block muss die Variable anders heißen, um Compilerfehler zu vermeiden.❌
+都可以叫e没关系
+try { ... }
+catch (IOException e) { ... }
+catch (SQLException e) { ... } // ✔ 完全合法
+
+7.Man kann in multi-catch beliebige Klassen zusammen kombinieren.❌
+必须是处理逻辑完全相同并且没有继承关系的异常类型
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
