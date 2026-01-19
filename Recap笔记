@@ -1118,15 +1118,70 @@ Hinweise:
 
 Codefragen订正：
 
+1.
+@FunctionalInterface
+interface Calculator {
+    int calculate(int a, int b);
+}
+
+Welcher Lambda-Ausdruck kann dieses Interface implementieren ?
+a.(Integer a, Integer b) -> { a + b }❌ 重点在这个{} 这是一个代码块，代码块lambda不会自动return‼️
+b.(Integer a, Integer b) -> { return a + b; }✅参数类型可以靠自动拆箱(unboxing)兜底
+c.(a, b) -> a + b✅表达式lambda ->自动return
+
+参数类型的推断来自函数式接口的方法签名，所以只要接口有好好写明白就可以自动推断出来类型。
+
+‼️看到 lambda 直接问自己三件事：
+有没有 {}？			有 → 必须手动 return
+参数类型能不能推断？	能 → (a, b) 永远最安全
+返回值最终类型对不对？	看“算完之后”，不是看参数
 
 
+2.
+List<String> names = List.of("Alice", "FOPBob", "Charlie");
+Welcher Ausdruck gibt jeden Namen aus?
+
+a.names.forEach(System.out::println);✅
+b.names.forEach(name -> { System.out.println(name) });❌
+c.names.forEach(name -> System.out.println(name));✅
 
 
+‼️forEach(Consumer<? super T>)
+Consumer<? super T> 的意思是：给我一个“至少能接收 T”的 Consumer，我会把 T 交给它用。
+Consumer<T>
+Methode: void accept(T t)	Verbraucht einen Wert T, führt eine Aktion aus, gibt aber nichts zurück
 
 
+看到 lambda，先问 接口方法返回什么：
+	•	返回 void
+→ 不管有没有 {}，都不需要 return
+	•	返回非 void
+→ 有 {} 就必须 return
 
 
+是否需要 return，只取决于接口方法的返回类型，和有没有 {} 没有本质关系。
 
+
+4.Java里字符串如何比较：String.compareTo(String)
+
+从左到右，一个字符一个字符比，用字符的 Unicode 值 比大小
+
+返回值的意义：
+返回负数 → a 排在 b 前
+返回 0 → 两个字符串在“排序意义上相等”
+返回正数 → a 排在 b 后
+
+但“前 / 后”的依据是：字典序（lexicographical order）。
+
+🌰1:
+BiFunction<String, String, Integer> compare = String::compareTo;
+int result = compare.apply("apple", "pen");
+A：返回-1
+
+🌰2:
+"apple".compareTo("banana")   // < 0  ('a' < 'b')
+"app".compareTo("apple")      // < 0  (前缀更短 → 更小)
+"Zoo".compareTo("apple")      // < 0  ('Z' < 'a')	⚠️大写字母 < 小写字母（Unicode 决定的）
 
 
 
