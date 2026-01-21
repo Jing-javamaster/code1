@@ -1507,3 +1507,103 @@ catch (NullPointerException e) { ... }
 
 
 
+
+
+
+
+Recap8 1🈷️21日
+Thema 8 - Generics
+
+1.Generics本质：Ein Algorithmus fuer mehreren Typen.
+Generics 只存在于编译期，运行期会被“擦除”（Type Erasure） 
+Generics 就是：给盒子贴标签。
+✅
+Box<苹果> box = new Box<>();		意思是：这个箱子，只允许放苹果
+box.put(苹果);   // ✅
+box.put(鞋子);   // ❌ 老师立刻拦住你，错误当场抓住，这就是 Generics。
+
+❌没有 Generics 的世界（没贴标签）
+想象一个箱子。
+Box box = new Box();
+box.put(东西);
+这个箱子：
+	•	谁都能往里塞
+	•	苹果、鞋子、钥匙都行
+	•	箱子不管你塞什么
+结果会怎样？👉 拿的时候才发现拿错了
+现在没问题，以后一定出事
+
+✅对应到 Java
+List<String> list = new ArrayList<>();
+我有一个“名单”，
+这个名单只允许写字符串名字
+
+往里放东西：
+list.add("小明");   // ✅
+list.add(123);     // ❌ 老师摇头
+你甚至还没“运行”，老师（编译器）已经说：👉 不行
+‼️对应Generics的本质：只存在于编译期，运行期会被擦除
+
+拿东西：
+String name = list.get(0);
+我知道这里面一定是“名字”，
+不用检查，不会拿错
+
+
+2.泛型类
+class Box<T> {
+    T value;
+}
+
+你只需要记一句话：👉 T 就是“占位符”
+像这样理解：
+class Box<这里以后再说是什么‼️> {
+    这里以后再说是什么 value;
+}
+
+真正使用的时候才决定
+Box<苹果> a = new Box<>();
+Box<香蕉> b = new Box<>();
+a：只能放苹果
+b：只能放香蕉
+👉 同一个盒子模具，不同标签
+
+
+
+3. 泛型方法
+public static <T> T getFirst(T[] arr)
+getFirst：方法名
+T：返回类型，占位符，一个类型的名字，“随便什么类型，但我先给它起个名字叫 T”
+<T>:这一句是声明：意思是，接下来这个方法里我会用到一个“‼️类型变量”，它叫 T
+
+我写了一个方法，它不关心你给我什么类型，你给我什么类型，我就原样还你一个‼️而这个类型我临时叫它 T
+
+也就是说‼️这个泛型方法也就是普通的方法上声明了一个类型变量，其它跟普通方法一模一样
+
+
+4.<?>
+List<?> list;
+我不知道盒子里装的是什么，所以——不敢往里放任何东西
+但：
+	•	👀 可以看看‼️
+	•	✋ 不敢乱塞‼️
+
+总结：
+1️⃣ Generics = 给容器贴标签
+2️⃣ 有标签 → 放错东西当场被拦
+3️⃣ T = 以后再决定是什么的占位符
+4️⃣ <?> = 我不知道是什么，所以不敢乱动
+
+
+Folien：
+1.Generics使得类、接口、方法得以作为变量
+2.使用泛型类型（变量 / 参数 / 返回值）
+📍位置：List<...>、Map<...> 里
+这里才会出现：? extends 和 ? super
+
+? extends Number：我不知道具体是哪一种，但它一定是 Number 的孩子  	————>适合读❓因为已知是Number的子类，可能是Integer、Double、Long，可以读，但是如果写List.add(1)，万一里面是double这不炸了吗
+? super String：我不知道具体是哪一种，但它一定是 String 的爸爸或祖先   ————>适合写❓因为已知是String的父类，可能是String、Object‼️，可以写List.add("Hello")不管是哪个类型都能放进去
+
+
+
+
