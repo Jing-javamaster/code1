@@ -1720,9 +1720,6 @@ b.Einen Entwurf erstellen, wenn noch nicht feststeht, für welchen Typ der Code 
 c.Um Funktionen auf mehrere Typen zu übertragen und Code-Wiederholungen zu vermeiden.✅
 d.Die Ausführungszeit beschleunigen.
 
-
-
-
 4.Worin besteht der Unterschied zwischen Wildcards und Generics ?
 a.Generics definieren einen Typ für die gesamte (abgeschlossene) Struktur während Wildcards nur auf einer konkretten Stelle.✅
 b.Wildcards waren später in Java eingeführt und liefern stärkere Typsicherheit. Wenn möglich, muss man lieber wildcards einsetzen.
@@ -1741,6 +1738,75 @@ d."? super X" nur für die Rückgabewerte.
 
 
 
+Codefragen订正：
+1.class E<T> {
+    public static <T> T up(T x) { return x; }
+}❌
+
+如果想用类的T那就不能static
+class E<T> {
+    public T up(T x) { return x; }
+}✅
+‼️static 方法不能用类的 T：因为类的 T 是“跟对象绑定的”，static 方法是“不跟任何对象绑定的”。所以 static 方法根本没资格用类的 T。
+方法可以自己声明 <T>，但别跟类的 T 同名
 
 
+
+
+
+‼️‼️‼️2.interface Testable<T extends Number> {
+    void apply(T t);
+}
+硬约束只有两条：‼️
+	1.	T 必须是 Number 或其子类
+	2.	实现类里的 apply 参数类型必须和接口里的 T 对得上
+
+a.
+class A implements Testable<Integer> {
+    public void apply(Integer t) {}
+}✅
+b.
+class D implements Testable {
+    public void apply(Object t) {}
+}❌bound错误
+c.
+class B implements Testable<T extends Number>{
+    public void apply(T t) {}
+}❌要继续使用泛型需要声明
+✅正确的是
+class B<T extends Number> implements Testable<T>{
+    public void apply(T t) {}
+}
+
+‼️类型变量只能在“声明阶段”声明；在接口实现（implements）里只能“使用‼️”已经声明过的类型，不能再次声明。
+
+d.
+class E implements Testable<String> { }❌bound错误
+e.
+class C<T> implements Testable<T extends Number> {
+    public void apply(T t) {}
+}✅❓❓❓
+
+
+
+‼️‼️‼️
+1️⃣在接口里：可以声明 T
+interface Testable<T extends Number> {
+    void apply(T t);
+}
+这是声明阶段 ✅允许写 T extends Number
+
+2️⃣在实现类里：有两种合法选择，继续是泛型（继续声明 T）/ 定死一个具体类型
+继续泛型：
+class B<T extends Number> implements Testable<T> {
+    public void apply(T t) {}
+}
+定死：
+class A implements Testable<Integer> {
+    public void apply(Integer t) {}
+}
+
+「如果前面已经声明过了，后面使用的时候就只用出现一个 T」
+「如果是新的一个类型需要泛型，那就是需要声明写全」
+「如果是实现的时候直接需要定死一个具体类型的话，在 bound 里面选一个就好了」
 
