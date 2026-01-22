@@ -1713,16 +1713,29 @@ void f(List<? super String> list) {
 安全起见应该是Object s = list.get(0);
 
 
+Theoriefragen订正：
+1.Was ist das Hauptziel von Generics in Java und welcher Vorteil ergibt sich gegenüber der Verwendung nicht-generischer Typen ?
+a.Zur Compilezeit Typsicherheit leisten und unnötige Casts vermeiden.✅
+b.Einen Entwurf erstellen, wenn noch nicht feststeht, für welchen Typ der Code geschrieben werden soll.❌
+c.Um Funktionen auf mehrere Typen zu übertragen und Code-Wiederholungen zu vermeiden.✅
+d.Die Ausführungszeit beschleunigen.
 
 
 
 
+4.Worin besteht der Unterschied zwischen Wildcards und Generics ?
+a.Generics definieren einen Typ für die gesamte (abgeschlossene) Struktur während Wildcards nur auf einer konkretten Stelle.✅
+b.Wildcards waren später in Java eingeführt und liefern stärkere Typsicherheit. Wenn möglich, muss man lieber wildcards einsetzen.
+c.Wildcards kann man für Arrays benutzen, Generics nicht.
+d.Generics schränken eine Struktur (z. B. Klasse, Methode usw.) zur Laufzeit auf einen bestimmten Typ ein. 
+Verwendet man statt Generics überall Wildcards (?), kann man für jede Variable, 
+jeden Parameter und jeden Rückgabewert einen beliebigen Typ wählen, was den Code viel flexibler macht.❌不能随意选，比如数组就不行
 
-
-
-
-
-
+5.In welchen Fällen verwendet man "? extends X" bzw. "? super X" ？‼️
+a."? super X" wenn man in die Struktur schreibt.✅
+b."? extends X" nur für die Rückgabewerte.
+c."? extends X" wenn man aus einer Struktur nur liest.✅
+d."? super X" nur für die Rückgabewerte.
 
 
 
