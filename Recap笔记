@@ -1604,6 +1604,130 @@ Folien：
 ? extends Number：我不知道具体是哪一种，但它一定是 Number 的孩子  	————>适合读❓因为已知是Number的子类，可能是Integer、Double、Long，可以读，但是如果写List.add(1)，万一里面是double这不炸了吗
 ? super String：我不知道具体是哪一种，但它一定是 String 的爸爸或祖先   ————>适合写❓因为已知是String的父类，可能是String、Object‼️，可以写List.add("Hello")不管是哪个类型都能放进去
 
+3.实现的时候 泛型接口 / 类时，只有两个选择：
+1️⃣ 继续当“可变的盒子”（保留泛型）		class MyBox<T> implements Boxable<T> { ... }
+2️⃣ 变成“专用盒子”（固定成某一种类型）	class StringBox implements Boxable<String> { ... }
+‼️implements Boxable<?>所以是错误的，因为只有这两种选择
+
+⚠️
+1️⃣Typparameter weiterreichen如果接口是泛型的，类也可以继续是泛型的
+2️⃣Konkreter Typ一旦你在 implements 里写了具体类型，就定死了
+class StringBox implements Boxable<String> { }
+3️⃣接口 / 父类有“限制”，你不能无视
+interface Boxable<T extends Number> { } ‼️这里的接口有<T extends Number>
+class MyBox<T extends Number> implements Boxable<T> { } ‼️那么实现的类也必须有<T extends Number>
+🌰：
+interface I<T> { }
+class A implements I<?> { }   // ❌
+<T>： “我需要一个可追踪的类型身份”
+<?>： “我不关心你是谁，只要我安全用”
+
+这也是为什么：<T> 可以用于声明，? 只能用于使用
+
+4.<? super T> 和 <? extends T> 
+<? super T> : T或T的父类
+T = String
+那么？可能是：String、Object（以及 String 的其他父类 / 接口）
+
+<? extends T> : T或T的子类
+T = Number
+List<Integer> 
+List<Double> 
+List<Number> 
+👉 都是 Number 或子类
+读ok 写不ok
+
+5.Type Erasure
+Java 的泛型只给编译器看，运行期会被擦除‼️
+1️⃣没有 bound：{T -> Object}
+class Box<T> {    ➡️	class Box {
+    T value;		    	Object value;
+}						}
+
+2️⃣有 upper bound：{T —> upper bound}
+class Box<T extends Number> {		➡️		class Box {
+    T value;									Number value;
+}											}												
+
+⚠️：所以
+1️⃣instanceof 泛型不存在：
+if (list instanceof List<String>) { } // ❌
+因为运行的时候泛型会被擦掉，也就是编译器实际看到：
+list instanceof List 根本看不到<>里面的类型
+2️⃣泛型数组不存在：
+数组：运行时要知道元素类型；
+泛型：运行时类型被擦掉
+👉 一个要“知道”，一个“不知道”，天生冲突
+3️⃣不能只靠泛型来重载方法
+void print(List<String> list) { }
+void print(List<Integer> list) { } // ❌
+擦除后变成：
+void print(List list)
+void print(List list)
+
+6.常见误区Fehlvorstellung
+1️⃣Generics和primitive类型不能放在一起，
+因为泛型的本质是 编译期检查，运行期‼️ 擦除为 Object / Bound
+而primitive（int, double, boolean…）不是 Object。
+2️⃣不能创建泛型数组
+T[] arr = new T[10];   // ❌
+List<String>[] arr = new List<String>[10]; // ❌
+List<T> list = new ArrayList<>();✅
+凡是 new T[...]，一定是错的‼️
+3️⃣? extends T = 我可以随便用 T 的子类❌
+事实是：哪个都不敢用，因为根本不确定
+‼️只能读不能写
+4️⃣运行时可以检查泛型类型（instanceof）❌
+if (list instanceof List<String>) { } // ❌
+if (list instanceof List) { } // ✅
+instanceof 只能看到“擦除后的类型”
+5️⃣泛型方法只能写在泛型类里❌
+class Util {
+    public static <T> T first(T[] arr) {
+        return arr[0];
+    }
+}
+泛型类和方法没有任何关系
+
+
+
+‼️‼️你现在应该形成的“条件反射”
+看到代码，脑子里立刻问：
+1.	这是声明还是使用？
+	•	声明 → <T extends ...>
+	•	使用 → ? extends / ? super
+2.	这是读多还是写多？
+	•	读 → extends
+	•	写 → super
+3.	运行期要不要知道类型？
+	•	要 → 泛型帮不了你
+	•	不要 → OK
+
+
+🌰：
+void f(List<? super String> list) {
+    String s = list.get(0);
+}❌
+可能是String或者Object
+但是下面就直接变成了String
+安全起见应该是Object s = list.get(0);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
