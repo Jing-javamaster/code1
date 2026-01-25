@@ -1810,3 +1810,233 @@ class A implements Testable<Integer> {
 「如果是新的一个类型需要泛型，那就是需要声明写全」
 「如果是实现的时候直接需要定死一个具体类型的话，在 bound 里面选一个就好了」
 
+
+
+
+
+
+
+Recap9 1🈷️25日 
+Thema 9 - Collections
+
+1.Collection是Java中的一种接口，将一组对象表示为一个整体。
+Collection 是 List / Set / Queue 的共同父接口(Deque是Queue的子类)；Map 是并列体系，不属于 Collection。
+
+Collections提供了多种方法，以高效作和管理存储数据。‼️一个是接口，一个是工具箱
+最基本集合操作：
+add(T a), addAll(Collection) 			// Fügt Elemente hinzu
+- remove(T), clear() 					// Entfernt Elemente
+- isEmpty(), contains(T a) 				// Prüft auf Elemente / Leerheit
+- size() 								// Liefert aktuelle Anzahl der Elemente
+- toArray(T[] a) 						// Wandelt Collection in Array um
+- stream() 								// Erzeugt einen Stream (siehe Recap 10)
+
+
+
+2.List是 Collection 的一个子接口（子类：ArrayList、LinkedList‼️说明实现中实际干活是这俩子类）
+List extends Collection by enforcing an ordered sequence of elements with index-based access, while allowing duplicates.
+它在 Collection 定义的“最基本集合操作”之上，额外增加了“顺序 + 下标访问(Ordnung + Indexzugriff)”的语义。
+什么时候用到？
+当你想保留数组的功能（索引访问、顺序），但又想避免数组的限制（如固定大小或缺少操作）时，会用它。
+为什么 List 要单独存在，而不能只用 Collection？
+Collection不保证顺序 且 没有index
+
+List<String> l = new ArrayList<>();
+Collection<String> c = l; // 为什么这是“解耦”❓
+解耦 = 让代码不依赖具体实现，只依赖约定（接口）。
+
+ArrayList<String> l = new ArrayList<>();
+我这个变量，永远假定你是 ArrayList。”
+不能 换成 LinkedList、不能 换成 HashSet、被 ArrayList 绑死
+这是强耦合‼️
+
+但解耦 ≠ “完全不依赖”
+✅ 解耦 = 只依赖抽象（接口 / 约定），不依赖实现细节‼️
+强耦合是指代码直接依赖于具体实现类；
+解耦是指代码依赖于抽象（如接口），从而不依赖具体实现细节。
+
+‼️不允许直接使用原始数据类型
+🌰：
+List<int> ❌
+List<Integer> ✅
+因为 Java 的泛型只对“引用类型”有效，不支持原始类型。
+❓为什么呢？ 因为泛型是靠 类型擦除 来实现的，
+List<Integer>/List<String>在编译后都变成List<Object>，而List<int>不行
+泛型只能装“对象”，int 不是对象，Integer 是。
+
+int					Integer
+原始类型				引用类型（类）
+不继承 Object		继承 Object
+直接存值				存对象引用
+没方法				有方法
+
+
+
+3.Set是 Collection 的一个子接口（子类：HashSet‼️说明实现中实际干活是这俩子类）
+Set extends Collection by enforcing uniqueness of elements, while leaving ordering unspecified.
+它在 Collection 的基础上，增加了“元素唯一性（无重复）‼️”这一约束，并且元素没有固定顺序（LinkedHashSet除外）。Set 接口本身不保证顺序，顺序与否是 实现类的特性，但是List 接口本身就保证“下标访问 + 顺序”
+keine Duplikat：插入重复性元素会被忽略（‼️你必须知道的精确定义是：Set 是否“重复”，不是看 ==，而是看“相等性规则”。）
+HashSet：👉 equals() + hashCode()
+TreeSet：👉 compareTo() == 0
+🙋提问：“为什么我往 HashSet 里放了两个看起来一样的对象？”
+答案几乎永远是：你没正确 override equals / hashCode
+If equals and hashCode are not overridden consistently, HashSet cannot detect logically equal objects as duplicates.
+
+什么时候用到？
+- 如果你需要一组唯一对象（例如注册编号）。
+- 删除列表中的重复物品。
+- 数学中
+- 当你需要快速检查某个元素是否已经存在时。
+
+具体方法：
+add(T elem):添加元素，已经存在就不会添加，如果添加成功返回true，反之返回false
+remove(Object o):删除元素，如果找到并删除返回true，反之返回false
+
+
+
+4.Queue 是 Collection 的子接口(子类：LinkedList遵循FIFO原则‼️这是LinkedList只有在Queue使用时的行为、PriorityQueue按优先级排列，并非进入顺序)
+Queue extends Collection by enforcing access to elements according to a queue discipline, typically FIFO, without providing positional access.
+它在接口层面‼️只保证“按队列语义取元素（head）”，而不保证具体的存储或排序方式。‼️要不然在接口层面保证具体的排序方式的话PriorityQueue就不合法
+使用场景：
+队列的实现（例如任务调度器、消息队列）
+处理顺序至关重要的流程。
+
+⚠️	head：下一次要被取出的元素‼️（不一定是 FIFO 插入最早的那个；PriorityQueue 里是“最小/最高优先级”那个）
+下面所有方法说的“第一个元素/ Kopf”都是指 head
+实现方法：
+	1.	看不看头元素（peek/element） vs 取走头元素（poll/remove）
+	2.	空队列时怎么处理：返回 null 还是抛异常
+	3.	入队是否成功：offer 返回 boolean
+peek/poll：看/取 空队列->返回null
+element/remove：看/取 空队列->抛异常
+offer：元素入队，失败时返回false
+
+
+
+5.Map 不属于 Collection，因为它的基本操作单位不是“元素”，而是“键–值对”。重点在于key的唯一性‼️
+Map stores data as key–value pairs with unique keys and does not belong to the Collection hierarchy.
+键值对：将数据以对的形式存储，每个值对应一个唯一的键。‼️也就是说key是唯一的 value可以多个对一个key
+唯一键：如果尝试添加已有键，旧值将被替换为新键。‼️重复key会被覆盖
+无保证顺序：大多数映射实现中键和值的顺序不保证，比如HashMap（例外：LinkedHashMap按照插入顺序、TreeMap按key顺序）。‼️和Set/Queue的规则一样：顺序是实现类特性，不是接口承诺
+不允许直接使用原始数据类型。
+
+Collection 的世界观					Map 的世界观
+•	最小单位：一个元素 E				•	最小单位：一对 (K, V)
+•	基本操作：						•	基本操作：
+•	add(E)							•	put(K, V)
+•	remove(E)						•	get(K)
+•	iterator()						•	remove(K)
+
+👉 语义完全不同
+
+
+遍历Map可以通过keySet()和values()entrySet，或者通过valueCollection
+1️⃣keySet() —— 所有 key
+Set<K> keys = map.keySet();
+for (K k : keys) {
+    System.out.println(k);
+}
+2️⃣values() —— 所有 value
+Collection<V> values = map.values();
+for (V v : values) {
+    System.out.println(v);
+}
+3️⃣entrySet() —— key + value（最常用）
+Set<Map.Entry<K,V>> entries = map.entrySet();
+for (Map.Entry<K,V> e : entries) {
+    System.out.println(e.getKey() + " -> " + e.getValue());
+}
+
+
+虽然 Map ≠ Collection，但：Map 可以“投影”为 Collection❓因为 Map 的“整体”不是 Collection，但它的“组成部分”是。
+‼️拆开看 Map 的内部结构（非常重要）
+
+一个 Map 里，本质上有三样东西：
+	1.	一组 keys → 天然是 Set
+	2.	一组 values → 天然是 Collection
+	3.	一组 (key, value) 对 → 天然是 Set of Entry
+
+所以 Java 设计者说：
+“我不把 Map 当 Collection，
+但我允许你把它的‘某一维度’当 Collection 来用。”
+
+
+总结：
+Set/Queue/Map：顺序是实现类特性，不是接口承诺
+List：下表访问+顺序是接口承诺
+
+Collection
+ ├── List   → 有序 + 可重复
+ └── Set    → 无重复（不保证顺序）
+ └── Queue  → 队列语义（head / tail）
+Map(key的唯一性)   ← 并列体系
+
+
+
+
+6.PECS：Producer Extends Consumer Super
+Producer Extends：如果你只读取（生成）通用集合的数据，可以使用<？extends T>
+List<? extends Number>: Sie können lesen, aber nichts hinzufügen
+Consumer Super：当你写入（消耗）数据到通用集合时，使用<? super T>
+List<? super Integer>: Sie können hinzufügen, aber beim Lesen bekommen Sie Object.
+
+
+
+7.常见误区Fehlvorstellung：全❌
+- Map gehört zu Collection.
+- Jedes Collection hat eine bestimmte Reihenfolge von Elementen.
+- List<Object> ist ein Supertyp von List<String>.
+- Collections können primitive Datentypen speichern.
+- Falls man ein Duplikat in Set einfügt, dann wird ein Exception geworfen.///会被忽视
+- Map.get(key) wirft immer eine Exception, wenn der Schlüssel nicht existiert./////Map.get(key) 在 key 不存在时返回 null，而不是抛异常。
+
+
+8.常见错误❌
+Ignorieren von null-Werten in Map.get()：
+map.get(key)：
+	•	key 不存在 → 返回 null
+	•	或者 key 存在，但 value 本来就是 null（某些 Map 允许)
+
+所以如果直接：map.get(k).toString() 就可能 NullPointerException。
+解决方法：
+1️⃣先判断if (map.containsKey(k)) { ... }
+2️⃣给默认值  V v = map.getOrDefault(k, defaultV);
+
+
+在遍历集合的同时，用集合本身的方法修改结构（add / remove），就会触发 ConcurrentModificationException
+for (String s : list) {////for each本质上就是iterator
+    if (s.equals("A")) {
+        list.remove(s);   // 💥
+    }
+}
+正确✅：使用iterator
+Iterator<String> it = list.iterator();
+while (it.hasNext()) {
+    String s = it.next();
+    if (s.equals("A")) {
+        it.remove();   // ✅
+    }
+}
+区别在于：用iterator修改是合法，绕过iterator修改不合法
+Iterator 只允许你用“它自己”的 remove() 来修改集合。
+任何直接调用 list.remove() 都是在绕开它。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
