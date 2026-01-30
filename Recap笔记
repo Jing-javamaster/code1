@@ -2025,6 +2025,100 @@ Iterator 只允许你用“它自己”的 remove() 来修改集合。
 
 
 
+Theoriefragen订正：
+1.Welche Aussagen über Collections sind korrekt?
+a.Sie unterstützen generische Datentypen.✅
+b.Sie ermöglichen das Speichern mehrerer Objekte.✅
+c.Alle Collections funktionieren mehr oder weniger gleich, da sie ein gemeinsames Interface implementieren.✅
+所有 Collections 或多或少工作方式相同，因为它们实现了一个共同的接口。
+d.Da sie generisch sind, können sie nicht nur komplexe, sondern auch primitive Datentypen speichern.
+
+2.Welche Eigenschaften gelten für alle Collection-Typen in Java?
+a.Sie können Objekte speichern✅
+b.Sie erlauben den Zugriff über einen numerischen Index
+c.Sie unterstützen das Hinzufügen und Entfernen von Elementen✅
+d.Sie garantieren die Reihenfolge der Elemente
+e.Sie implementieren das Interface java.util.Collection✅///这句话的意思是 所有Collection类型的都是实现了Collection接口
+f.Sie unterstützen primitive Datentypen direkt
+
+
+
+3.Welche Interfaces gehören zur Java Collection API?
+a.Set✅
+b.Map
+c.List✅
+d.Stream
+e.Iterator✅
+f.Queue✅
+
+关键在题目的“API”两个字
+Java Collection API ≠ java.util.Collection 接口体系
+Java Collection API（或 Collections Framework） 包含：
+	•	Collection 本身
+	•	所有其子接口
+	•	以及用来操作 Collection 的配套接口
+👉 Iterator 正是这种“配套接口”
+
+
+
+4.Welche Aussagen über Set sind korrekt?
+a.Im Gegensatz zu Map, ist das Speichern von doppelten Objekten oder Werten im Set nicht erlaubt✅在set里面存储两个重复的对象或者值是不允许的，Map当中可以允许值存两个一样的，set是保证无重复所以对
+b.In einem Set können keine doppelten Objekte/Werte gespeichert werden✅
+c.Ein Set hat eine feste Länge
+d.Set kann nur einen Wert speichern, der über die Methode set() hinzugefügt wurde
+e.Dieses Interface wird verwendet, um Werte in andere Collections zu speichern
+
+
+5.Welche Aussagen über die Unterschiede zwischen List und Array sind korrekt?
+a.Man kann auf Elemente eines Arrays durch den Index zugreifen, in einer Liste jedoch nicht
+b.Ein Array hat eine feste Länge, während eine Liste keine feste Länge hat✅
+c.Elemente eines Arrays haben eine Reihenfolge, aber die Elemente einer List nicht
+d.Man kann ein Array von Arrays erstellen, aber keine Liste von Listen❌
+List<List<Integer>> list = new ArrayList<>();✅ 
+👉 Java 泛型是可嵌套的
+👉 List 本来就是对象的集合
+👉 List<List> 没有任何语法或语义限制
+e.Die Länge eines Arrays kann über length abgerufen werden, die Länge einer Liste jedoch über size()✅
+
+
+
+
+7.Welche Vorteile bieten Collections gegenüber Arrays?
+a.Sie sind schneller als Arrays
+b.Sie speichern automatisch nur eindeutige Werte
+c.Sie haben eine flexible Größe✅
+d.Sie unterstützen Such- und Sortierfunktionen✅
+Array类型没有Sort功能
+
+
+9.Was ist der Unterschied zwischen ArrayList und LinkedList?
+a.ArrayList kann keine null-Werte speichern
+b.LinkedList ist effizienter beim Einfügen und Entfernen von Elementen✅
+c.Beide speichern Daten identisch im Speicher, und der Unterschied in den Methoden liegt
+d.ArrayList hat schnelleren Zugriff über Index✅因为 ArrayList 是基于连续数组实现的，支持 O(1) 的随机访问；LinkedList 是链表，按索引访问是 O(n)。
+
+
+10.Welche Collection-Typen garantieren eine bestimmte Reihenfolge?
+a.TreeSet✅TreeSet 也保证顺序，但它保证的是“排序顺序（Sortierreihenfolge）”。
+b.HashMap
+c.LinkedList✅保证插入顺序
+d.HashSet
+
+
+12.
+Welche Aussagen über Queue sind korrekt?
+a.Queue erlaubt keine Duplikate
+b.Queue ist generisch, aber auch für primitive Datentypen geeignet✅
+c.Elemente werden am Ende entfernt und am Anfang eingefügt✅
+d.Das erste eingefügte Element wird als Erstes entfernt✅
+e.Das erste eingefügte Element wird als Letztes entfernt
+
+
+
+
+
+Codefragen订正：
+
 
 
 
